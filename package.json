@@ -2,11 +2,22 @@
   "name": "nodejsseries",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/Khushipathariya/Nodejs_Repo#readme",
+  "bugs": {
+    "url": "https://github.com/Khushipathariya/Nodejs_Repo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khushipathariya/Nodejs_Repo.git"
+  },
   "license": "ISC",
   "author": "khushi pathariya",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }

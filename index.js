@@ -1,30 +1,48 @@
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
+const users = require("./MOCK_DATA.json");
 
-const myServer = http.createServer((req, res) => {
+const app = express();
+const PORT = 8000;
 
-    const log = `${Date.now()}: ${req.url} New Req Received\n`;
+// Routes
+app.get("/users", (req, res) => {
+    const html = `
+        <ul>
+            ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
+        </ul>
+    `;
 
-    fs.appendFile("log.txt", log, (err) => {
-
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        switch (req.url) {
-            case "/":
-                res.end("HomePage");
-                break;
-
-            case "/about":
-                res.end("I am Khushi Pathariya");
-                break;
-
-            default:
-                res.end("404 Not Found");
-        }
-    });
+    res.send(html);
 });
 
-myServer.listen(8000, () => console.log("Server Started!"));
+//REST API  
+
+app.get("/api/users", (req, res) => {
+    return res.json(users);
+});
+
+app
+.route("/api/users/:id")
+.get((req, res) => {
+        const id = Number(req.params.id);
+        const user = users.find((user) => user.id === id);
+        return res.json(user);
+     })
+     .patch((req, res) => {
+        //Edit user with id
+        return res.json({ status: "Pending"});
+     })
+     .delete((req, res) => {
+        //Delete user with id
+        return res.json({ status: "Pending"});
+     });
+
+
+app.post("/api/users", (req, res) => {
+    // TO Do : create new user
+  return res.json({ status: "pending"});
+});
+
+app.listen(PORT, () => {
+    console.log(`Server Started at PORT:${PORT}`);
+});
